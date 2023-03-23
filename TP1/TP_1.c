@@ -21,8 +21,8 @@ int main()
     // Loop control
     int isEnd = 0;
     // Coordinates
-    int x1, x2, x3;
-    int y1, y2, y3;
+    float x1, x2, x3;
+    float y1, y2, y3;
 
     // == Initialisations
     // Allegro
