@@ -8,6 +8,7 @@ int main() {
     // Declaration
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
+    ALLEGRO_TIMER * timer = NULL;
     ALLEGRO_EVENT event = {};
     int fini = 0;
 
@@ -21,6 +22,10 @@ int main() {
     // Creation display-> allocation
     display = al_create_display(800, 600);
 
+    // Creation du timer
+    timer = al_create_timer(1.0);
+    al_start_timer(timer);
+
     // Creation file
     queue = al_create_event_queue();
 
@@ -31,6 +36,8 @@ int main() {
     al_register_event_source(queue, al_get_keyboard_event_source());
     // souris
     al_register_event_source(queue, al_get_mouse_event_source());
+    // timer
+    al_register_event_source(queue, al_get_timer_event_source(timer));
 
     // Changer le titre
     al_set_window_title(display, "TP0");
@@ -60,6 +67,10 @@ int main() {
                 printf("x: %d , y: %d \n", event.mouse.x, event.mouse.y);
                 break;
             case  ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                al_clear_to_color(al_map_rgb(rand()%255, rand()%255, rand()%255));
+                al_flip_display();
+                break;
+            case ALLEGRO_EVENT_TIMER:
                 al_clear_to_color(al_map_rgb(rand()%255, rand()%255, rand()%255));
                 al_flip_display();
                 break;
