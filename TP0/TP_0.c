@@ -81,6 +81,7 @@ int main() {
     // Free
     al_destroy_display(display);
     al_destroy_event_queue(queue);
+    al_destroy_timer(timer);
 
     return 0;
 }
