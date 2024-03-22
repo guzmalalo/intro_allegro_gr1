@@ -29,6 +29,7 @@ void centrerRectangle(Rect *rectangle, int largeur, int hauteur) {
 int main() {
     // Definition
     bool fini = false;
+    bool clicked = false;
     bool flag_bas = false;
     bool redessiner = false;
     Rect rectangle;
@@ -41,6 +42,7 @@ int main() {
     assert(al_init());
     assert(al_init_primitives_addon());
     assert(al_install_keyboard());
+    assert(al_install_mouse());
     centrerRectangle(&rectangle, 80, 60);
 
     // Creation
@@ -60,6 +62,7 @@ int main() {
     al_register_event_source(fifo, al_get_keyboard_event_source());
     al_register_event_source(fifo, al_get_display_event_source(fenetre));
     al_register_event_source(fifo, al_get_timer_event_source(timer));
+    al_register_event_source(fifo, al_get_mouse_event_source());
 
     dessiner(rectangle);
 
@@ -104,8 +107,23 @@ int main() {
                     redessiner = false;
                 }
                 break;
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                if(event.mouse.x > rectangle.x && event.mouse.x < rectangle.x + rectangle.largeur){
+                    clicked = true;
+                }
+                break;
+            case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+                clicked = false;
+                break;
+            case ALLEGRO_EVENT_MOUSE_AXES:
+                if(clicked){
+                    rectangle.x = event.mouse.x;
+                    rectangle.y = event.mouse.y;
+                    redessiner =true;
+                }
             default: {
                 printf("Cet event est ignore.\n");
+                break;
             }
         }
     }
